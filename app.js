@@ -102,7 +102,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', 'true');
   next();
 });
-app.use(express.static(path.join(__dirname, './client')));
+app.use(express.static(path.join(__dirname, '/client')));
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
