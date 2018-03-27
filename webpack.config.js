@@ -1,3 +1,4 @@
+require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -5,7 +6,6 @@ const HtmlWebpackPugPlugin = require('html-webpack-pug-plugin');
 
 const { env: { NODE_ENV, HOST_NAME } } = process;
 const isDevMode = NODE_ENV === 'development';
-
 exports.webpack = webpack;
 const config = {
   devtool: 'inline-source-map',

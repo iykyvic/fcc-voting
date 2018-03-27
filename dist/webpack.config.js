@@ -6,6 +6,7 @@ var _stringify2 = _interopRequireDefault(_stringify);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+require('dotenv').config();
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -17,7 +18,6 @@ var _process = process,
     HOST_NAME = _process$env.HOST_NAME;
 
 var isDevMode = NODE_ENV === 'development';
-
 exports.webpack = webpack;
 var config = {
   devtool: 'inline-source-map',
