@@ -7,7 +7,7 @@ import Options from './Options';
 
 dotenv.config();
 mongoose.Promise = bluebird;
-mongoose.connect(process.env.DB_URL, { useMongoClient: true });
+mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
 
 export const database = mongoose.connection;
 export const Poll = Polls;
