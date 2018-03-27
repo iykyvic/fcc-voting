@@ -2,14 +2,15 @@
   "name": "fcc-voting",
   "version": "1.0.0",
   "description": "freecodecamp voting app",
-  "main": "app.js",
+  "main": "dist/app.js",
   "scripts": {
     "build:server": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./test,./coverage,docs,./client,README.MD,LICENSE,package-lock.json,package.json --copy-files",
     "build:client": "webpack -p",
     "build": "npm run build:server && npm run build:client",
     "dev": "export NODE_ENV=development && babel-watch app.js",
     "start": "export NODE_ENV=production && node dist/app.js",
-    "test": "mocha"
+    "test": "mocha",
+    "postinstall": "npm run uild"
   },
   "repository": {
     "type": "git",
