@@ -1,4 +1,1 @@
-export default (req, res) => res.status(200).json({
-  status: 'success',
-  message: 'welcome to the polls api'
-});
+export default (req, res) => res.render('index', {});

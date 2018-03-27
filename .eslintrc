@@ -1,10 +1,15 @@
 {
   "root": true,
-  "extends": "airbnb-base",
+  "plugins": [
+    "react",
+    "jsx-a11y"
+  ],
+  "extends": ["airbnb-base", "plugin:react/all", "plugin:jsx-a11y/recommended"],
   "parser": "babel-eslint",
   "env": {
     "node": true,
     "es6": true,
+    "browser": true,
     "mocha": true
   },
   "parserOptions": {
@@ -30,26 +35,28 @@
     "templateStrings": true
   },
   "rules": {
-   "import/no-unresolved": 0,
+    "import/no-unresolved": 0,
     "one-var": 0,
     "one-var-declaration-per-line": 0,
     "new-cap": 0,
     "consistent-return": 0,
     "no-param-reassign": 0,
     "no-restricted-syntax": [2, "WithStatement"],
+    "no-process-env": "off",
     "comma-dangle": 0,
     "curly": [1, "multi-line"],
     "no-multi-spaces": [2, {"exceptions": {"ImportDeclaration": true}}],
     "no-multi-str": 0,
+    "import/extensions": [".js", ".jsx"],
     "import/no-extraneous-dependencies": [
-      2, 
+      2,
       {
-        "devDependencies": true, 
-        "optionalDependencies": false, 
+        "devDependencies": true,
+        "optionalDependencies": false,
         "peerDependencies": false
       }
     ],
-    "max-len": [2, 80, 2],
+    "max-len": [2, 100, 2],
     "no-shadow": [1, { "allow": ["req", "res", "err"] }],
     "require-jsdoc": [1, {
       "require": {
