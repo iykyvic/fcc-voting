@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPugPlugin = require('html-webpack-pug-plugin');
 
-const { env: { NODE_ENV } } = process;
+const { env: { NODE_ENV, HOST_NAME } } = process;
 const isDevMode = NODE_ENV === 'development';
 
 exports.webpack = webpack;
@@ -42,7 +42,7 @@ const config = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      API_URL: JSON.stringify('http://localhost:3000/api/v1/')
+      API_URL: JSON.stringify(`${HOST_NAME}/api/v1/`)
     }),
     new HtmlWebpackPlugin({
       filename: 'index.pug',

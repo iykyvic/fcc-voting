@@ -12,7 +12,9 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var HtmlWebpackPugPlugin = require('html-webpack-pug-plugin');
 
 var _process = process,
-    NODE_ENV = _process.env.NODE_ENV;
+    _process$env = _process.env,
+    NODE_ENV = _process$env.NODE_ENV,
+    HOST_NAME = _process$env.HOST_NAME;
 
 var isDevMode = NODE_ENV === 'development';
 
@@ -45,7 +47,7 @@ var config = {
     publicPath: '/'
   },
   plugins: [new webpack.DefinePlugin({
-    API_URL: (0, _stringify2.default)('http://localhost:3000/api/v1/')
+    API_URL: (0, _stringify2.default)(HOST_NAME + '/api/v1/')
   }), new HtmlWebpackPlugin({
     filename: 'index.pug',
     template: path.resolve(__dirname, 'client/index.pug'),
