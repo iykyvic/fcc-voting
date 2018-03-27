@@ -45,7 +45,6 @@ const NoPoll = (props) => {
         <Typography className={classes.heading} variant="headline" component="h3">
           NO POLL FOUND
         </Typography>
-
         <Button href="/poll/new" variant="raised" color="secondary" className={classes.button}>
           ADD A NEW POLL
         </Button>
