@@ -51,7 +51,7 @@ const config = {
     }),
     new HtmlWebpackPugPlugin(),
   ],
-  resolve: { extensions: ['.js', '.jsx'] }
+  resolve: { extensions: ['', '.js', '.jsx'] }
 };
 
 if (isDevMode) {
