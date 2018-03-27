@@ -45,6 +45,9 @@ const config = {
       API_URL: JSON.stringify(`${HOST_NAME}/api/v1/`)
     }),
     new HtmlWebpackPlugin({
+      filetype: 'pug'
+    }),
+    new HtmlWebpackPlugin({
       filename: 'index.pug',
       template: path.resolve(__dirname, 'client/index.pug'),
       title: 'Hot Module Reload'
