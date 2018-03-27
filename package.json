@@ -7,10 +7,9 @@
     "build:server": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./test,./coverage,docs,./client,README.MD,LICENSE,package-lock.json,package.json --copy-files",
     "build:client": "webpack -p",
     "build": "npm run build:server && npm run build:client",
-    "start": "export NODE_ENV=development && babel-watch app.js",
-    "start:test": "export NODE_ENV=production && node dist/app.js",
-    "test": "mocha",
-    "postinstall": "npm run build"
+    "dev": "export NODE_ENV=development && babel-watch app.js",
+    "start": "export NODE_ENV=production && node dist/app.js",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
