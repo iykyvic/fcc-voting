@@ -1,12 +1,14 @@
 import express from 'express';
-import Polls    from '../controllers/polls';
+import { findPoll, findPolls, createPoll, updatePoll, deletePoll } from '../controllers/polls';
+import { verifyToken } from '../controllers/auth';
 
 const polls = express.Router();
 
-polls.get('/', Polls.find)
-.get('/:id', Polls.findOne)
-.post('/', Polls.create)
-.patch('/:id', Polls.update)
-.delete('/:id', Polls.delete);
+polls.get('/view', findPolls)
+  .use(verifyToken)
+  .get('/:id', findPoll)
+  .post('/create', createPoll)
+  .post('/:id/update', updatePoll)
+  .delete('/:id/delete', deletePoll);
 
 export default polls;

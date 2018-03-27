@@ -1,19 +1,28 @@
-import dotenv     from 'dotenv';
-import debug      from 'debug';
-import path       from 'path';
-import express    from 'express';
-import favicon    from 'serve-favicon';
-import logger     from 'morgan';
-import Logger     from 'js-logger';
-import bodyParser from 'body-parser';
-import http       from 'http';
-import Routes     from './server/routes';
+import { config }       from 'dotenv';
+import debug            from 'debug';
+import path             from 'path';
+import express          from 'express';
+import favicon          from 'serve-favicon';
+import logger           from 'morgan';
+import Logger           from 'js-logger';
+import bodyParser       from 'body-parser';
+import http             from 'http';
+import webpackDev       from 'webpack-dev-middleware';
+import webpackHot       from 'webpack-hot-middleware';
+import webpack          from 'webpack';
+import webpackConfig    from './webpack.config';
+import passport         from './server/middlewares/passport';
+import Routes           from './server/routes';
+import { database }     from './server/models';
 
-dotenv.config();
-debug('docman:app');
+config();
+debug('fccvoting:app');
 Logger.useDefaults();
 
 const app = express();
+const { env: { NODE_ENV, PORT } } = process;
+
+export const isDevMode = NODE_ENV === 'development';
 
 /**
  * Normalize a port into a number, string, or false.
@@ -32,8 +41,9 @@ const normalizePort = (val) => {
   return false;
 };
 
-const port = normalizePort(process.env.PORT || '3000');
-const server = http.createServer(app);
+const port = normalizePort(PORT || '3000');
+
+app.server = http.createServer(app);
 
 /**
  * Event listener for HTTP server "error" event.
@@ -66,18 +76,24 @@ const onError = (error) => {
  * @returns {null} server process is continous here, so no returns
  */
 const onListening = () => {
-  const addr = server.address();
+  const addr = app.server.address();
   const bind = typeof addr === 'string'
     ? `pipe ${addr}`
     : `port ${addr.port}`;
-  debug(`🚧 App is Listening on ${bind}`);
+  Logger.debug(`🚧 App is Listening on ${bind}`);
 };
 const headers1 = 'Origin, X-Requested-With, Content-Type, Accept';
 const headers2 = ',Authorization, Access-Control-Allow-Credentials';
 
-app.set('views', path.join(__dirname, 'client/views'));
+app.set('views', path.join(__dirname, 'client'));
 app.set('view engine', 'pug');
 app.set('port', port);
+app.set('json spaces', 2);
+app.set('json replacer', (key, value) => {
+  const excludes = ['password', '_raw', '_json', '__v'];
+
+  return excludes.includes(key) ? undefined : value;
+});
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -86,19 +102,32 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', 'true');
   next();
 });
-app.use(favicon(path.join(__dirname, 'client/public/images/favicon.ico')));
-app.use(express.static(path.join(__dirname, 'client/public')));
+app.use(express.static(path.join(__dirname, './client')));
+app.use(favicon(path.join(__dirname, 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(passport.initialize());
 
-app.use('/', Routes.home);
+if (isDevMode) {
+  const compiler = webpack(webpackConfig);
+  app.use(webpackDev((compiler), {
+    noInfo: true,
+    publicPath: webpackConfig.output.publicPath
+  }));
+  app.use(webpackHot(compiler));
+}
+
 app.use('/api/v1/auth', Routes.auth);
 app.use('/api/v1/polls', Routes.polls);
+app.use('/api/v1/users', Routes.users);
+app.use('/api/v1/options', Routes.options);
+app.use('*', Routes.home);
 
-server.on('listening', onListening);
-server.on('error', onError);
-
-server.listen(port);
+app.database = database;
+app.database.on('error', () => Logger.info('connection error'));
+app.database.once('open', () => app.server.listen(port)
+  .on('listening', onListening)
+  .on('error', onError));
 
 export default app;
