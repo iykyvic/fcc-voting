@@ -46,7 +46,7 @@ const config = {
     }),
     new HtmlWebpackPlugin({
       filename: 'index.pug',
-      template: './client/index.pug',
+      template: path.resolve(__dirname, 'client/index.pug'),
       title: 'Hot Module Reload'
     }),
     new HtmlWebpackPugPlugin(),
