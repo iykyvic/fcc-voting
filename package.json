@@ -10,7 +10,7 @@
     "dev": "export NODE_ENV=development && babel-watch app.js",
     "start": "export NODE_ENV=production && node dist/app.js",
     "test": "mocha",
-    "postinstall": "npm run uild"
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
