@@ -7,7 +7,8 @@ export async function fecthCurrentUser(token) {
     error: user ? false : true
   });
   try {
-    const { data: { data: user } } = await axios.get('http://localhost:3000/api/v1/users/view/current', {
+    const { data: { data: user } } = await axios({
+      url: 'users/view/current',
       headers:  {
         authorization: token
       }
