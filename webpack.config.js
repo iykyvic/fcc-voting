@@ -27,6 +27,10 @@ const config = {
       {
         test: /\.(jpg|png|svg|gif|ico)$/,
         use: 'url-loader'
+      },
+      {
+        test: /\.pug/,
+        use: 'pug-loader'
       }
     ]
   },
