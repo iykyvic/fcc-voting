@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPugPlugin = require('html-webpack-pug-plugin');
 
-const { env: { NODE_ENV, HOST_NAME } } = process;
+const { env: { NODE_ENV, HOST_NAME, FACEBOOK_APP_ID } } = process;
 const isDevMode = NODE_ENV === 'development';
 exports.webpack = webpack;
 const config = {
@@ -42,7 +42,8 @@ const config = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      API_URL: JSON.stringify(`${HOST_NAME}/api/v1/`)
+      API_URL: JSON.stringify(`${HOST_NAME}/api/v1/`),
+      FACEBOOK_APP_ID: JSON.stringify(FACEBOOK_APP_ID)
     }),
     new HtmlWebpackPlugin({
       filetype: 'pug'
@@ -58,7 +59,10 @@ const config = {
 };
 
 if (isDevMode) {
-  config.entry.push('webpack-hot-middleware/client?reload=true');
+  config.entry = [
+    config.entry,
+    'webpack-hot-middleware/client?reload=true'
+  ]
   config.plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 

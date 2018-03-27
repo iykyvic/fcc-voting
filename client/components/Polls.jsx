@@ -150,7 +150,7 @@ export class Polls extends Component {
         </Grid>
       </div>
     }
-    return  <NoPoll />
+    return  <NoPoll user={user}/>
   }
 }
 
