@@ -34,7 +34,8 @@ export async function fecthPoll(id, token) {
     return data;
   } catch (error) {
     const { response: { data } } = error;
-    return data;
+    r
+    throw new Error(data);
   }
 }
 
@@ -54,7 +55,8 @@ export async function createPoll(title, token) {
     return poll;
   } catch(error) {
     const { response: { data } } = error;
-    return data;
+
+    throw new Error(data);
   }
 }
 
@@ -73,7 +75,8 @@ export async function updatePollTitle(pollData, token) {
     return data;
   } catch(error) {
     const { response: { data } } = error;
-    return data;
+
+    throw new Error(data);
   }
 }
 
@@ -92,7 +95,8 @@ export async function publishPoll(pollData, token) {
     return data;
   } catch(error) {
     const { response: { data } } = error;
-    return data;
+
+    throw new Error(data);
   }
 }
 
@@ -109,8 +113,8 @@ export async function deletePoll(poll, token) {
 
     return data;
   } catch(error) {
-    console.log(error)
     const { response: { data } } = error;
-    return data;
+
+    throw new Error(data);
   }
 }

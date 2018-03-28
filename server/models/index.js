@@ -3,7 +3,8 @@ import bluebird  from 'bluebird';
 import mongoose  from 'mongoose';
 import Polls     from './Polls';
 import Users     from './Users';
-import Options from './Options';
+import Options   from './Options';
+import Votes      from './Votes';
 
 dotenv.config();
 mongoose.Promise = bluebird;
@@ -13,3 +14,4 @@ export const database = mongoose.connection;
 export const Poll = Polls;
 export const User = Users;
 export const Option = Options;
+export const Vote = Votes;

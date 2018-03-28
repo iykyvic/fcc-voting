@@ -17,7 +17,9 @@ export default class Login extends Component {
   }
 
   static propTypes = {
-    auth: PropTypes.bool.isRequired
+    auth: PropTypes.bool.isRequired,
+    currentUser: PropTypes.func.isRequired,
+    loading: PropTypes.func.isRequired
   };
 
   componentDidMount() {

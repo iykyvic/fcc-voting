@@ -16,7 +16,8 @@ export async function createOption(title, poll, token) {
     return option;
   } catch(error) {
     const { response: { data } } = error;
-    return data;
+
+    throw new Error(data);
   }
 }
 
@@ -35,26 +36,25 @@ export async function updatePollOptionTitle(optionData, token) {
     return data;
   } catch(error) {
     const { response: { data } } = error;
-    return data;
+
+    throw new Error(data);
   }
 }
 
-export async function updatePollOptionStat(optionData, token) {
+export async function updatePollOptionStat(optionData, finger) {
   try {
     const { title, _id, date, _id: optionId, ...option } = optionData;
     const { data: { data } } = await axiosSnackBar({
       url: `options/${_id}/updatestat`,
-      headers: {
-        authorization: token
-      },
       method: 'POST',
-      data: option
+      data: { finger }
     });
 
     return data;
   } catch(error) {
     const { response: { data } } = error;
-    return data;
+
+    throw new Error(data.message);
   }
 }
 
@@ -71,8 +71,8 @@ export async function deletePollOption(option, token) {
 
     return data;
   } catch(error) {
-    console.log(error)
     const { response: { data } } = error;
-    return data;
+
+    throw new Error(data);
   }
 }

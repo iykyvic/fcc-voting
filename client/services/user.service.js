@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { axiosSnackBar as axios } from './axios';
 
 export async function fecthCurrentUser(token) {
   const displayResult = (user) => ({

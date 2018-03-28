@@ -85,8 +85,6 @@ const onListening = () => {
 const headers1 = 'Origin, X-Requested-With, Content-Type, Accept';
 const headers2 = ',Authorization, Access-Control-Allow-Credentials';
 
-app.set('views', path.join(__dirname, 'client'));
-app.set('view engine', 'pug');
 app.set('port', port);
 app.set('json spaces', 2);
 app.set('json replacer', (key, value) => {

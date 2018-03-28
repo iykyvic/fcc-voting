@@ -2,7 +2,6 @@ require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackPugPlugin = require('html-webpack-pug-plugin');
 
 const { env: { NODE_ENV, HOST_NAME, FACEBOOK_APP_ID } } = process;
 const isDevMode = NODE_ENV === 'development';
@@ -43,17 +42,10 @@ const config = {
   plugins: [
     new webpack.DefinePlugin({
       API_URL: JSON.stringify(`${HOST_NAME}/api/v1/`),
+      HOST_NAME: JSON.stringify(`${HOST_NAME}`),
       FACEBOOK_APP_ID: JSON.stringify(FACEBOOK_APP_ID)
     }),
-    new HtmlWebpackPlugin({
-      filetype: 'pug'
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'index.pug',
-      template: path.resolve(__dirname, 'client/index.pug'),
-      title: 'Hot Module Reload'
-    }),
-    new HtmlWebpackPugPlugin(),
+    new HtmlWebpackPlugin(),
   ],
   resolve: { extensions: ['.js', '.jsx'] }
 };

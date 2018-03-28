@@ -12,6 +12,7 @@ import { verifyToken } from '../controllers/auth';
 const options = express.Router();
 
 options.get('/view', findOptions)
+  .post('/:id/updatestat', updatePollOptionStat)
   .use(verifyToken)
   // .get('/view/:id', findPoll)
   .post('/create', routeValidator.validate({
@@ -21,7 +22,6 @@ options.get('/view', findOptions)
     }
   }), createOption)
   .post('/:id/update', updatePollOption)
-  .post('/:id/updatestat', updatePollOptionStat)
   .delete('/:id/delete/', deletePollOption);
 
 export default options;

@@ -1,4 +1,4 @@
-import { Option, Poll } from '../models/index';
+import { Option, Poll, Vote } from '../models/index';
 import { showError, showSuccess } from './polls';
 import { ownsPoll } from './auth';
 
@@ -63,11 +63,22 @@ export async function updatePollOption(req, res) {
  */
 export async function updatePollOptionStat(req, res) {
   try {
-    const { body, body: { author }, params: { id }, decoded: { _id } } = req;
+    const { body: { finger }, params: { id } } = req;
 
-    const { author: authorId, date, title, _id: optionId, ...rest } = body;
+    const option = await Option.findOne({ _id: id });
+    const poll = await Poll.findById(option.poll);
 
-    const option = await Option.findById(id);
+    if (poll.status !== 'PUBLISHED') {
+      throw new Error('poll is currently closed.');
+    }
+
+    const vote = await Vote.findOne({ poll: poll._id, finger });
+    if (vote) {
+      throw new Error('you have already voted');
+    }
+
+    await Vote.create({ poll: poll._id, finger });
+
     option.timesChosen += 1;
     const savedOption = await option.save();
 

@@ -3,7 +3,7 @@ import Home    from '../controllers/home';
 
 const home = express.Router();
 
-home.get('/', Home);
+home.get('*', Home);
 
 export default home;
 
