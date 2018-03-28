@@ -8,7 +8,7 @@ const isDevMode = NODE_ENV === 'development';
 exports.webpack = webpack;
 const config = {
   devtool: 'inline-source-map',
-  entry: path.resolve(__dirname, 'client/index'),
+  entry: path.resolve(__dirname, 'client/index.jsx'),
   module: {
     rules: [
       {
