@@ -36,7 +36,7 @@ const config = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist/client/'),
+    path: path.resolve(__dirname, 'dist/client'),
     publicPath: '/'
   },
   plugins: [
@@ -47,6 +47,7 @@ const config = {
     }),
     new HtmlWebpackPlugin(),
   ],
+
   resolve: { extensions: ['.js', '.jsx'] }
 };
 
