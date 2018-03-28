@@ -43,9 +43,8 @@ const NoPoll = (props) => {
       <Paper className={classes.control}>
         <Icon className={classes.icon} color="inherit" style={{ fontSize: '10em', textAlign: 'center' }}>note_add</Icon>
         <Typography className={classes.heading} variant="headline" component="h3">
-          NO POLL FOUND
+          NO POLL FOUND - LOGIN TO ADD POLLS
         </Typography>
-
         <Button href="/poll/new" variant="raised" color="secondary" className={classes.button}>
           ADD A NEW POLL
         </Button>

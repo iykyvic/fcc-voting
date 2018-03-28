@@ -46,6 +46,9 @@ export class Polls extends Component {
     more: {
       marginLeft: 'auto',
     },
+    button: {
+      margin: theme.spacing.unit,
+    },
     chip: {
       margin: theme.spacing.unit,
     }
@@ -117,7 +120,7 @@ export class Polls extends Component {
             }
             action={
               <FacebookProvider appId="399546963835482">
-                <Share href={`${window.location.protocol}://${window.location.host}/poll/${_id}`}>
+                <Share href={`${HOST_NAME}/poll/${_id}`}>
                 <Button
                   color="primary"
                   className={classes.button}
@@ -136,8 +139,10 @@ export class Polls extends Component {
             </Typography>
           </CardContent>
           <CardActions className={classes.actions}>
-            {owner ? <Button href={`/poll/${_id}/edit`} className={classes.more} size="small">EDIT POLL</Button> : ''}
-            <Button href={`/poll/${_id}`} size="small">GO TO POLL</Button>
+            <div className={classes.more}>
+              {owner ? <Button href={`/poll/${_id}/edit`} className={classes.button} size="small">EDIT POLL</Button> : ''}
+              <Button href={`/poll/${_id}`} className={classes.button} size="small">GO TO POLL</Button>
+            </div>
           </CardActions>
         </Card>
       </Grid>

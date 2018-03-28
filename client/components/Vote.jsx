@@ -87,6 +87,7 @@ const Vote = props => {
           path="/poll/:id"
           render={
             routerProps => (<Poll
+              auth={props.auth}
               token={props.token}
               updatePoll={props.updatePoll}
               fetchPoll={props.fetchPoll}

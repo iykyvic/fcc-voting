@@ -1,15 +1,14 @@
+require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackPugPlugin = require('html-webpack-pug-plugin');
 
-const { env: { NODE_ENV } } = process;
+const { env: { NODE_ENV, HOST_NAME, FACEBOOK_APP_ID } } = process;
 const isDevMode = NODE_ENV === 'development';
-
 exports.webpack = webpack;
 const config = {
   devtool: 'inline-source-map',
-  entry: path.resolve(__dirname, 'client/index'),
+  entry: path.resolve(__dirname, 'client/index.jsx'),
   module: {
     rules: [
       {
@@ -27,10 +26,6 @@ const config = {
       {
         test: /\.(jpg|png|svg|gif|ico)$/,
         use: 'url-loader'
-      },
-      {
-        test: /\.pug/,
-        use: 'pug-loader'
       }
     ]
   },
@@ -41,25 +36,26 @@ const config = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist/client/'),
+    path: path.resolve(__dirname, 'dist/client'),
     publicPath: '/'
   },
   plugins: [
     new webpack.DefinePlugin({
-      API_URL: JSON.stringify('http://localhost:3000/api/v1/')
+      API_URL: JSON.stringify(`${HOST_NAME}/api/v1/`),
+      HOST_NAME: JSON.stringify(`${HOST_NAME}`),
+      FACEBOOK_APP_ID: JSON.stringify(FACEBOOK_APP_ID)
     }),
-    new HtmlWebpackPlugin({
-      filename: 'index.pug',
-      template: path.resolve(__dirname, 'client/index.pug'),
-      title: 'Hot Module Reload'
-    }),
-    new HtmlWebpackPugPlugin(),
+    new HtmlWebpackPlugin(),
   ],
+
   resolve: { extensions: ['.js', '.jsx'] }
 };
 
 if (isDevMode) {
-  config.entry.push('webpack-hot-middleware/client?reload=true');
+  config.entry = [
+    config.entry,
+    'webpack-hot-middleware/client?reload=true'
+  ]
   config.plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 
